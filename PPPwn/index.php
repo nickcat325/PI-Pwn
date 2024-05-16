@@ -10,11 +10,11 @@ if (isset($_POST['save'])){
 	$config .= "USECPP=".(isset($_POST["usecpp"]) ? "true" : "false")."\n";
 	$config .= "VMUSB=".(isset($_POST["vmusb"]) ? "true" : "false")."\n";
 	$config .= "WEBSVR=true\n";
-	exec('echo "'.$config.'" | sudo tee /boot/firmware/PPPwn/config.sh');
-	exec('echo "'.trim($_POST["plist"]).'" | sudo tee /boot/firmware/PPPwn/ports.txt');
+	exec('echo "'.$config.'" | sudo tee /boot/firmware/PI-Pwn/PPPwn/config.sh');
+	exec('echo "'.trim($_POST["plist"]).'" | sudo tee /boot/firmware/PI-Pwn/PPPwn/ports.txt');
     if (isset($_POST["vmusb"]) == true)
 	{
-      exec('sudo bash /boot/firmware/PPPwn/remount.sh &');
+      exec('sudo bash /boot/firmware/PI-Pwn/PPPwn/remount.sh &');
 	}
 	else
 	{
@@ -36,10 +36,10 @@ if (isset($_POST['shutdown'])){
 }
 
 if (isset($_POST['remount'])){
-   exec('sudo bash /boot/firmware/PPPwn/remount.sh &');
+   exec('sudo bash /boot/firmware/PI-Pwn/PPPwn/remount.sh &');
 }
 
-$cmd = 'sudo cat /boot/firmware/PPPwn/config.sh';
+$cmd = 'sudo cat /boot/firmware/PI-Pwn/PPPwn/config.sh';
 exec($cmd ." 2>&1", $data, $ret);
 if ($ret == 0){
 foreach ($data as $x) {
@@ -80,7 +80,7 @@ foreach ($data as $x) {
 }
 
 
-$cmd = 'sudo cat /boot/firmware/PPPwn/ports.txt';
+$cmd = 'sudo cat /boot/firmware/PI-Pwn/PPPwn/ports.txt';
 exec($cmd ." 2>&1", $pdata, $pret);
 if ($pret == 0){
    $portlist = "";

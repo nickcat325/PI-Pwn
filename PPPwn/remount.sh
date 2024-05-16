@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ ! -f /boot/firmware/PPPwn/config.sh ]; then
+if [ ! -f /boot/firmware/PI-Pwn/PPPwn/config.sh ]; then
 VMUSB=false
 else
-source /boot/firmware/PPPwn/config.sh
+source /boot/firmware/PI-Pwn/PPPwn/config.sh
 fi
 if [ $VMUSB = true ] ; then
   sudo rmmod g_mass_storage

@@ -24,27 +24,27 @@ You can also setup a webserver to control the pi or change settings by accessing
 <a href=https://www.linksprite.com/linksprite-pcduino3/>pcDuino3b</a> with armbian <a href=https://imola.armbian.com/archive/pcduino3nano/archive/Armbian_5.38_Pcduino3nano_Debian_jessie_next_4.14.14.7z>Image</a><br>
 
 
-## Install
+## Install OS
 <br>
 
 You need to install <a href=https://www.raspberrypi.com/software/operating-systems/>Raspberry Pi OS Lite</a> or <a href="https://www.armbian.com/">Armbian Cli / Minimal</a> onto a sd card.<br>
 
 Place the sd card into the raspberry pi, boot it and connect it to the internet then run the following commands<br>
 
+## Install PI-Pwn exploit
+Clone the repository in to /boot/firmware.
 <br>
 
 ```sh
-sudo apt update
-sudo apt install git -y
-sudo rm -f -r PI-Pwn
-sudo systemctl stop pipwn
-git clone https://github.com/stooged/PI-Pwn
-sudo mkdir /boot/firmware/
-cd PI-Pwn
-sudo cp -r PPPwn /boot/firmware/
-cd /boot/firmware/PPPwn
-sudo chmod 777 *
-sudo bash install.sh
+sudo git clone https://github.com/nickcat325/PI-Pwn.git /boot/firmware/PI-Pwn
+```
+Edit the run script. Replace 'nano' with your preferred text editor.
+```sh
+sudo nano /boot/firmware/PI-Pwn/PPPwn/run.sh
+```
+Run the install script.
+```sh
+sudo /boot/firmware/PI-Pwn/PPPwn/install.sh
 ```
 
 <br>
@@ -105,5 +105,9 @@ The idea is you boot the console and the pi together and the pi will keep trying
 
 ## Updating
 
-You can edit the exploit scripts by putting the sd card in your computer and going to the PPPwn folder.<br>
+Update PI-Pwn by runing
+```sh
+cd /boot/firmware/PI-Pwn/PPPwn && sudo git pull
+```
+<br>
 The install.sh script can also be run again to install updates or change the settings.

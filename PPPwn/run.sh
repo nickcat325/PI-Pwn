@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f /boot/firmware/PPPwn/config.sh ]; then
+if [ ! -f /boot/firmware/PI-Pwn/PPPwn/config.sh ]; then
 INTERFACE="eth0" 
 FIRMWAREVERSION="11.00" 
 SHUTDOWN=true
@@ -10,7 +10,7 @@ USECPP=true
 VMUSB=false
 WEBSVR=false
 else
-source /boot/firmware/PPPwn/config.sh
+source /boot/firmware/PI-Pwn/PPPwn/config.sh
 fi
 if [[ -z $USECPP ]] ;then
 USECPP=true
@@ -106,9 +106,9 @@ echo -e "\n\033[95mReady for console connection\033[0m\n" | sudo tee /dev/tty1
 while [ true ]
 do
 if [ $USECPP = true ] ; then
-   ret=$(sudo /boot/firmware/PPPwn/$CPPBIN --interface "$INTERFACE" --fw "${FIRMWAREVERSION//.}" --stage1 "/boot/firmware/PPPwn/stage1_$FIRMWAREVERSION.bin" --stage2 "/boot/firmware/PPPwn/stage2_$FIRMWAREVERSION.bin")
+   ret=$(sudo /boot/firmware/PI-Pwn/PPPwn/$CPPBIN --interface "$INTERFACE" --fw "${FIRMWAREVERSION//.}" --stage1 "/boot/firmware/PI-Pwn/PPPwn/stage1_$FIRMWAREVERSION.bin" --stage2 "/boot/firmware/PI-Pwn/PPPwn/stage2_$FIRMWAREVERSION.bin")
 else
-   ret=$(sudo python3 /boot/firmware/PPPwn/pppwn.py --interface=$INTERFACE --fw=$FIRMWAREVERSION --stage1=/boot/firmware/PPPwn/stage1_$FIRMWAREVERSION.bin --stage2=/boot/firmware/PPPwn/stage2_$FIRMWAREVERSION.bin)
+   ret=$(sudo python3 /boot/firmware/PI-Pwn/PPPwn/pppwn.py --interface=$INTERFACE --fw=$FIRMWAREVERSION --stage1=/boot/firmware/PI-Pwn/PPPwn/stage1_$FIRMWAREVERSION.bin --stage2=/boot/firmware/PI-Pwn/PPPwn/stage2_$FIRMWAREVERSION.bin)
 fi
 if [ $ret -ge 1 ]
    then
@@ -127,8 +127,8 @@ if [ $ret -ge 1 ]
 			sudo sysctl net.ipv4.ip_forward=1
 			sudo sysctl net.ipv4.conf.all.route_localnet=1
 			sudo iptables -t nat -I PREROUTING -s 192.168.2.0/24 -p udp -m udp --dport 53 -j DNAT --to-destination 127.0.0.1:5353
-			if [ -f /boot/firmware/PPPwn/ports.txt ]; then
-				PORTS=$(sudo cat /boot/firmware/PPPwn/ports.txt | tr "," "\n")
+			if [ -f /boot/firmware/PI-Pwn/PPPwn/ports.txt ]; then
+				PORTS=$(sudo cat /boot/firmware/PI-Pwn/PPPwn/ports.txt | tr "," "\n")
 				for prt in $PORTS
 				do
     				sudo iptables -t nat -I PREROUTING -p tcp --dport $prt -j DNAT --to 192.168.2.2:$prt
